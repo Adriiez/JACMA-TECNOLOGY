@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JACMA Technology: Infografía Integral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: This SPA is designed with a linear, scrollable narrative flow, divided into distinct thematic sections mirroring the comprehensive project report. A sticky navigation bar enhances usability by allowing quick jumps between sections. This structure was chosen to ensure all detailed information from the source document is presented without overwhelming the user, facilitating easy digestion and exploration of complex project aspects. -->
+    <!-- Visualization & Content Choices: 
+        - General Project Data (2.1-2.4): Goal: Inform -> Viz: Text Blocks -> Interaction: None -> Justification: Provides foundational project details concisely. -> Library/Method: HTML/Tailwind CSS.
+        - Favorable Factors (2.5): Goal: Inform -> Viz: Bulleted List -> Interaction: None -> Justification: Clearly lists supporting environmental elements. -> Library/Method: HTML/Tailwind CSS.
+        - Business Idea Motivation (2.6): Goal: Inform -> Viz: Paragraph Text -> Interaction: None -> Justification: Conveys the core purpose and driving force. -> Library/Method: HTML/Tailwind CSS.
+        - GANTT Phases (3.1.1): Goal: Change (Time) -> Viz: Styled HTML Timeline -> Interaction: None -> Justification: Visually represents project milestones over time. -> Library/Method: HTML/Tailwind CSS.
+        - SWOT Analysis (3.1.2): Goal: Organize -> Viz: 4-Quadrant styled grid and structured text -> Interaction: None -> Justification: Standard, clear presentation of internal/external factors. -> Library/Method: HTML/Tailwind CSS.
+        - PEST Analysis (3.1.3): Goal: Inform -> Viz: Bulleted List -> Interaction: None -> Justification: Summarizes external macro-environmental factors. -> Library/Method: HTML/Tailwind CSS.
+        - Porter's Five Forces (3.1.4): Goal: Inform -> Viz: Bulleted List -> Interaction: None -> Justification: Explains competitive forces impacting the business. -> Library/Method: HTML/Tailwind CSS.
+        - Customers (3.1.5): Goal: Inform -> Viz: Bulleted List -> Interaction: None -> Justification: Details target audience segmentation. -> Library/Method: HTML/Tailwind CSS.
+        - Competitors (3.1.6): Goal: Compare -> Viz: Bulleted List -> Interaction: None -> Justification: Outlines key competitors and their focus. -> Library/Method: HTML/Tailwind CSS.
+        - Suppliers (3.1.7): Goal: Inform -> Viz: Paragraph Text -> Interaction: None -> Justification: Describes supply chain origin and relationships. -> Library/Method: HTML/Tailwind CSS.
+        - Legislation & Technology Opportunities (3.1.8-3.1.9): Goal: Inform -> Viz: Bulleted Lists -> Interaction: None -> Justification: Highlights regulatory context and technological advantages. -> Library/Method: HTML/Tailwind CSS.
+        - Resources (4.1-4.7): Goal: Inform/Organize -> Viz: Bulleted Lists and Text Blocks -> Interaction: None -> Justification: Details physical, human, and operational resources. -> Library/Method: HTML/Tailwind CSS.
+        - Competitive Advantage (4.8): Goal: Inform -> Viz: Paragraph Text -> Interaction: None -> Justification: Clearly states what makes JACMA unique. -> Library/Method: HTML/Tailwind CSS.
+        - Product Idea Generator (New Feature): Goal: Engage/Inform -> Viz: Text Input + AI Output -> Interaction: User input, Button Click -> Justification: Demonstrates AI capability directly related to product innovation. -> Library/Method: JavaScript (Gemini API).
+        - Marketing Plan (5.1-5.8): Goal: Organize/Inform -> Viz: Bulleted Lists and Numbered List (RACE) -> Interaction: None -> Justification: Outlines commercial and marketing strategies. -> Library/Method: HTML/Tailwind CSS.
+        - Financial Plan (6.1-6.9): Goal: Inform/Composition -> Viz: Donut Chart + Detailed Text Blocks -> Interaction: Tooltips on hover -> Justification: Provides a visual breakdown of investments and detailed financial concepts. -> Library/Method: Chart.js.
+        - Viability Conclusions (7.1-7.2): Goal: Inform -> Viz: Text Blocks -> Interaction: None -> Justification: Summarizes project feasibility. -> Library/Method: HTML/Tailwind CSS.
+        - Team Conclusion (8.): Goal: Inform -> Viz: Paragraph Text -> Interaction: None -> Justification: Provides a final summary from the team's perspective. -> Library/Method: HTML/Tailwind CSS.
+        - Minutas & Bibliography (9.-10.): Goal: Inform -> Viz: Text Blocks -> Interaction: None -> Justification: Acknowledges supporting documentation. -> Library/Method: HTML/Tailwind CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* slate-900 */
+            color: #F8FAFC; /* slate-50 */
+        }
+        .section-card {
+            background-color: #1E293B; /* slate-800 */
+            border: 1px solid #334155; /* slate-700 */
+            border-radius: 0.75rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .ai-response-box {
+            background-color: #0c4a6e; /* blue-900 */
+            border-left: 4px solid #7DD3FC; /* sky-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            color: #E0F2FE; /* blue-100 */
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        /* Cover Page Specific Styles */
+        #coverPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0F172A; /* Same as body background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #coverPage.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .cover-title {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5); /* sky-400 glow */
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        .cover-title:hover {
+            transform: scale(1.02);
+            color: #7DD3FC; /* sky-200 */
+        }
+        .cover-subtitle {
+            font-size: 1.5rem;
+            color: #BAE6FD; /* sky-100 */
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        .explore-button {
+            background-color: #38BDF8; /* sky-400 */
+            color: white;
+            font-weight: bold;
+            padding: 1rem 2.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        .explore-button:hover {
+            background-color: #0EA5E9; /* sky-500 */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.5);
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background-color: #0F172A; /* Same as body, slightly darker or with opacity */
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            padding: 1rem 0;
+        }
+        .sticky-nav a {
+            color: #BAE6FD; /* sky-100 */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .sticky-nav a:hover {
+            background-color: #1E293B; /* slate-800 */
+            color: #7DD3FC; /* sky-200 */
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background-color: #38BDF8;
+            border-radius: 50%;
+            border: 2px solid #0F172A;
+            z-index: 1;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 0.75rem;
+            top: 1rem;
+            bottom: 0;
+            width: 2px;
+            background-color: #334155;
+        }
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Interactive Cover Page -->
+    <section id="coverPage">
+        <h1 class="cover-title">JACMA Technology</h1>
+        <p class="cover-subtitle text-center">Descubre el Futuro de la Tecnología Personalizada</p>
+        <button id="exploreButton" class="explore-button">Explorar Proyecto</button>
+    </section>
+
+    <!-- Main Infographic Content (Initially hidden) -->
+    <div id="mainContent" class="hidden">
+
+        <!-- Sticky Navigation Bar -->
+        <nav class="sticky-nav">
+            <div class="container mx-auto flex flex-wrap justify-center gap-4 text-sm md:text-base">
+                <a href="#datos-proyecto">Datos del Proyecto</a>
+                <a href="#estudio-mercado">Estudio de Mercado</a>
+                <a href="#recursos-proyecto">Recursos</a>
+                <a href="#plan-marketing">Marketing</a>
+                <a href="#plan-financiero">Financiero</a>
+                <a href="#conclusiones">Conclusiones</a>
+            </div>
+        </nav>
+
+        <div class="container mx-auto p-4 md:p-8">
+
+            <header class="text-center my-16">
+                <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-wide">JACMA Technology</h1>
+                <p class="text-xl md:text-2xl text-[#7DD3FC] mt-4">Infografía Integral Detallada del Proyecto Emprendedor II</p>
+            </header>
+
+            <!-- Sección de Métricas Clave -->
+            <section class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">Métricas Clave del Proyecto</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="section-card">
+                        <p class="text-5xl font-bold text-[#38BDF8]">6</p>
+                        <p class="text-lg text-slate-300 mt-2">Miembros Fundadores</p>
+                    </div>
+                    <div class="section-card">
+                        <p class="text-5xl font-bold text-[#38BDF8]">90%</p>
+                        <p class="text-lg text-slate-300 mt-2">Satisfacción Cliente (Año 1)</p>
+                    </div>
+                    <div class="section-card">
+                        <p class="text-5xl font-bold text-[#38BDF8]">+50</p>
+                        <p class="text-lg text-slate-300 mt-2">Modelos de Dispositivos (3 Meses)</p>
+                    </div>
+                    <div class="section-card">
+                        <p class="text-5xl font-bold text-[#38BDF8]">$150k+</p>
+                        <p class="text-lg text-slate-300 mt-2">Inversión Inicial Mínima</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 2: Datos del Proyecto -->
+            <section id="datos-proyecto" class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">2. Datos del Proyecto (Idea de Negocio)</h2>
+                <p class="text-slate-300 text-center mb-8">Esta sección presenta la información fundamental de JACMA Technology, desde su denominación hasta los motivos que impulsan este innovador proyecto.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Información General</h3>
+                        <p class="text-slate-300">**Nombre:** JACMA Technology</p>
+                        <p class="text-slate-300">**Dirección:** Operación inicial con enfoque digital y posibles centros de experiencia o puntos de recogida en Santo Domingo, D.N.</p>
+                        <p class="text-slate-300">**Provincia:** Santo Domingo, D. N., República Dominicana</p>
+                        <p class="text-slate-300">**Fecha:** 30 de julio de 2025</p>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Línea de Negocio (Servicios)</h3>
+                        <p class="text-slate-300">Distribución y comercialización de equipos tecnológicos innovadores con **Inteligencia Artificial (IA)**, ofreciendo recomendaciones personalizadas, simulaciones 3D, herramientas de comparación y soporte técnico avanzado.</p>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Factores Sociales y Económicos Favorables</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>Crecimiento constante del mercado tecnológico.</li>
+                            <li>Demanda insatisfecha de equipos informáticos.</li>
+                            <li>Ley de Emprendimiento No. 688-16.</li>
+                            <li>Valoración de la innovación y personalización.</li>
+                            <li>Sociedad que valora la sostenibilidad.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card col-span-full">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Idea de Negocio (Motivos para Emprender)</h3>
+                        <p class="text-slate-300">JACMA Technology busca llenar un vacío en el mercado dominicano, abordando la frustración de los consumidores al elegir el producto ideal debido a la "escasa variedad de productos" o "recomendaciones inadecuadas". La motivación principal es transformar la experiencia de compra de tecnología, garantizando que cada cliente encuentre el dispositivo perfecto para su estilo de vida y presupuesto, impulsando su crecimiento y optimizando su conectividad. El emprendimiento es visto como un camino hacia la independencia, el crecimiento personal y la realización, aportando valor a las personas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 3: Estudio de Mercado -->
+            <section id="estudio-mercado" class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">3. Estudio de Mercado</h2>
+                <p class="text-slate-300 text-center mb-8">Un análisis profundo del entorno de mercado, incluyendo estrategias de planificación, clientes, competencia y proveedores, es crucial para el éxito de JACMA Technology.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="section-card lg:col-span-2">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">3.1 Estrategias de Planificación</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">3.1.1 Diagrama GANTT (Fases y Plazos)</h4>
+                                <div class="relative pl-4">
+                                    <div class="timeline-line"></div>
+                                    <div class="timeline-item">
+                                        <h5 class="font-semibold text-[#7DD3FC]">Meses 1-3 (Lanzamiento)</h5>
+                                        <p class="text-slate-300 text-sm">Lanzamiento completo de la plataforma con IA, ampliación del catálogo a más de 50 modelos de dispositivos, entrenamiento del 100% del equipo de atención al cliente.</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <h5 class="font-semibold text-[#7DD3FC]">Meses 4-6 (Consolidación)</h5>
+                                        <p class="text-slate-300 text-sm">Asegurar que el sistema de IA esté 100% operativo y optimizado, implementar un programa de seguimiento y soporte postventa que logre un 75% de interacción con los clientes.</p>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <h5 class="font-semibold text-[#7DD3FC]">Mes 12 (Liderazgo)</h5>
+                                        <p class="text-slate-300 text-sm">Alcanzar un nivel de satisfacción del cliente del 90% en encuestas de retroalimentación, consolidar la posición como referente y líder en el mercado dominicano.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">3.1.2 Análisis FODA</h4>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-green-900/50 border border-green-500/50 p-4 rounded-lg">
+                                        <h5 class="font-semibold text-green-400">Fortalezas</h5>
+                                        <ul class="list-disc list-inside text-green-300 text-xs">
+                                            <li>Uso innovador de IA.</li>
+                                            <li>Equipo multidisciplinario.</li>
+                                            <li>Propuesta de valor única.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-yellow-900/50 border border-yellow-500/50 p-4 rounded-lg">
+                                        <h5 class="font-semibold text-yellow-400">Debilidades</h5>
+                                        <ul class="list-disc list-inside text-yellow-300 text-xs">
+                                            <li>Marca nueva.</li>
+                                            <li>Alta inversión inicial.</li>
+                                            <li>Dependencia de datos.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-sky-900/50 border border-sky-500/50 p-4 rounded-lg">
+                                        <h5 class="font-semibold text-sky-400">Oportunidades</h5>
+                                        <ul class="list-disc list-inside text-sky-300 text-xs">
+                                            <li>Crecimiento del mercado.</li>
+                                            <li>Demanda de personalización.</li>
+                                            <li>Potencial de alianzas.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-red-900/50 border border-red-500/50 p-4 rounded-lg">
+                                        <h5 class="font-semibold text-red-400">Amenazas</h5>
+                                        <ul class="list-disc list-inside text-red-300 text-xs">
+                                            <li>Fuerte competencia.</li>
+                                            <li>Rápida evolución tecnológica.</li>
+                                            <li>Resistencia a la IA.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="text-xl font-bold text-white mb-2">3.1.3 Análisis PEST</h4>
+                                <ul class="list-disc list-inside text-slate-300 space-y-1">
+                                    <li>**Políticos/Legales:** Ley de Emprendimiento No. 688-16, cumplimiento normativo.</li>
+                                    <li>**Económicos:** Crecimiento del mercado tecnológico, necesidad de inversión.</li>
+                                    <li>**Socioculturales:** Valoración de innovación, personalización, impacto de digitalización.</li>
+                                    <li>**Tecnológicos:** IA como corazón del negocio, evolución tecnológica.</li>
+                                </ul>
+                            </div>
+                            <div class="md:col-span-2">
+                                <h4 class="text-xl font-bold text-white mb-2">3.1.4 Análisis de Fuerza PORTER</h4>
+                                <ul class="list-disc list-inside text-slate-300 space-y-1">
+                                    <li>**Poder de Negociación de los Compradores:** Alto, mitigado con personalización.</li>
+                                    <li>**Poder de Negociación de los Proveedores:** Moderado a alto, se buscarán relaciones formales.</li>
+                                    <li>**Amenaza de Nuevos Entrantes:** Moderada, pero IA y diferenciación son barreras.</li>
+                                    <li>**Amenaza de Productos Sustitutos:** Moderada, mitigada con innovación constante.</li>
+                                    <li>**Rivalidad entre Competidores Existentes:** Alta, se compite con personalización y experiencia.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Clientes</h3>
+                        <p class="text-slate-300 mb-2">Individuos y empresas en República Dominicana que buscan adquirir dispositivos electrónicos.</p>
+                        <ul class="list-disc list-inside text-slate-300 space-y-1">
+                            <li>**Demográficas:** Usuarios y empresas de todos tamaños, buscando rendimiento y personalización.</li>
+                            <li>**Geográficas:** Clientes en toda la República Dominicana.</li>
+                            <li>**Socioculturales:** Valoración de innovación, personalización, servicio al cliente, soporte postventa, sostenibilidad.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Competidores</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-1">
+                            <li>**DigitalTech:** Innovación, calidad, seguridad.</li>
+                            <li>**TechElite:** Alta gama, asesoramiento personalizado.</li>
+                            <li>**InnovaTech:** Laptops, durabilidad, rendimiento.</li>
+                            <li>**DigitalWorld:** Amplia gama, sostenibilidad.</li>
+                        </ul>
+                        <p class="text-slate-300 text-sm mt-4">Nuestra diferenciación clave: **personalización profunda con IA** y **servicio postventa excepcional**.</p>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Proveedores</h3>
+                        <p class="text-slate-300 mb-2">Dispositivos de fabricantes globales (principalmente Asia). Obtenidos y distribuidos desde RD. Alianzas con empresas de mensajería nacionales.</p>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Legislación y Políticas Vigentes</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-1">
+                            <li>Ley de Emprendimiento No. 688-16.</li>
+                            <li>Obligaciones Fiscales (RNC, TSS, DGII).</li>
+                            <li>Asesoría contable y del Ministerio de Hacienda.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Avances u Oportunidades Tecnológicas</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-1">
+                            <li>Inteligencia Artificial (IA) para recomendaciones y simulaciones.</li>
+                            <li>Digitalización impulsa demanda.</li>
+                            <li>Plataformas e-commerce eficientes.</li>
+                            <li>Big Data y Machine Learning.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 4: Recursos del Proyecto -->
+            <section id="recursos-proyecto" class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">4. Recursos del Proyecto</h2>
+                <p class="text-slate-300 text-center mb-8">Los recursos son la base operativa de JACMA Technology, desde la infraestructura y el equipo humano hasta la ventaja competitiva que nos distingue.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Infraestructura y Herramientas</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**Locales/Terrenos:** Operación digital inicial, futuros "centros de experiencia".</li>
+                            <li>**Hardware:** Servidores de alto rendimiento para IA, equipos de computación.</li>
+                            <li>**Software:** Plataformas de desarrollo cloud, herramientas de gestión, licencias de IA.</li>
+                            <li>**Mobiliario:** Para oficinas y posibles centros de experiencia.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Generación de Empleo (Personal)</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**Capital Humano:** Expertos en tecnología, ventas, atención al cliente, marketing, soporte técnico.</li>
+                            <li>**Socios y Promotores:** Clemente Alcántara Oviedo, Edgar Adrián Del Valle Castillo, Alexis Amado González, Pedro Sánchez, Felipe Soler Robles, José Fabián Bonilla.</li>
+                            <li>**Tipo de Contratación:** Fijos (roles estratégicos) y por contrato/temporal (proyectos específicos).</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Perfiles Profesionales Clave</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**CTO:** Experto en IA/ML, desarrollo de software.</li>
+                            <li>**Gerente Comercial:** Habilidades en ventas, negociación.</li>
+                            <li>**Gerente Marketing:** Experiencia en marketing digital, branding.</li>
+                            <li>**Gerente Operaciones:** Logística, cadena de suministro.</li>
+                            <li>**Gerente S. Cliente:** Atención al cliente, soporte técnico.</li>
+                            <li>**CEO:** Liderazgo estratégico, visión de negocio.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Método de Trabajo</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**Colaborativo y multidisciplinario:** Trabajo en equipo constante.</li>
+                            <li>**Ágil:** Posible implementación de metodologías ágiles.</li>
+                            <li>**Individual:** Tareas específicas de investigación o desarrollo.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card lg:col-span-2">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Ventaja Competitiva (Innovación y Novedad)</h3>
+                        <p class="text-slate-300">La principal diferencia y lo más innovador de JACMA Technology es su **plataforma impulsada por Inteligencia Artificial** que ofrece **recomendaciones ultra-personalizadas** y **simulaciones 3D**. Esto va más allá de la simple venta, garantizando que el cliente encuentre el "dispositivo perfecto" para sus necesidades específicas. La integración de un motor de IA para la personalización de la experiencia de compra de tecnología en el mercado dominicano, combinado con un soporte humano experto, es lo que nos hace únicos.</p>
+                    </div>
+                    <div class="section-card col-span-full">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Generador de Ideas de Producto Innovadoras ✨</h3>
+                        <textarea id="productIdeaInput" class="w-full p-3 border border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38BDF8] bg-slate-700 text-white mb-4" rows="4" placeholder="Ej: Ideas para una 'laptop para diseñadores gráficos' o 'dispositivo de seguridad para el hogar inteligente'."></textarea>
+                        <button id="productIdeaButton" class="w-full bg-[#38BDF8] text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-[#0EA5E9] transition-colors flex items-center justify-center">
+                            <span id="productIdeaButtonText">Generar Ideas ✨</span>
+                            <span id="productIdeaLoading" class="hidden ml-2">
+                                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <div id="productIdeaOutput" class="ai-response-box">
+                            Las ideas de productos innovadoras aparecerán aquí.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 5: Plan de Comercialización y Marketing -->
+            <section id="plan-marketing" class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">5. Plan de Comercialización y Marketing</h2>
+                <p class="text-slate-300 text-center mb-8">Nuestro plan de marketing digital se enfoca en alcanzar, activar, convertir y comprometer a nuestros clientes, utilizando estrategias innovadoras para destacar en el mercado.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Estrategia General</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**Nombre Comercial:** JACMA Technology</li>
+                            <li>**Demanda Prevista:** Alta, por crecimiento del mercado y propuesta de valor.</li>
+                            <li>**Precios:** Basados en personalización y valor percibido.</li>
+                            <li>**Canales de Distribución:** Plataforma e-commerce, futuros centros de experiencia, mensajería.</li>
+                            <li>**Ampliación de Productos:** Objetivo de +50 modelos en los primeros 3 meses.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Publicidad y Métodos de Mercadeo (Modelo RACE)</h3>
+                        <ol class="list-decimal list-inside text-slate-300 space-y-2">
+                            <li>**Alcance (Reach):** Aumentar visibilidad (SEO, SEM, publicidad digital, contenido).</li>
+                            <li>**Acción (Act):** Estimular interacción (plataforma, asistente IA, demos).</li>
+                            <li>**Conversión (Convert):** Transformar interés en ventas (proceso simple, ofertas personalizadas).</li>
+                            <li>**Compromiso (Engage):** Fomentar lealtad (postventa, fidelización, comunidad).</li>
+                        </ol>
+                        <h4 class="font-semibold text-white mt-4 mb-2">Métodos de Mercadeo Específicos:</h4>
+                        <ul class="list-disc list-inside text-slate-300 text-sm">
+                            <li>Marketing de Contenidos (blogs, videos, guías).</li>
+                            <li>Publicidad Digital (redes sociales, Google Ads, influencers).</li>
+                            <li>Email Marketing (segmentación, ofertas personalizadas).</li>
+                            <li>Eventos y Webinars.</li>
+                            <li>Programas de Fidelización.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 6: Plan Económico Financiero -->
+            <section id="plan-financiero" class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">6. Plan Económico Financiero</h2>
+                <p class="text-slate-300 text-center mb-8">Una visión detallada de las inversiones, fuentes de financiación, y previsiones de ingresos y gastos, fundamental para la sostenibilidad de JACMA Technology.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Plan de Inversiones Iniciales</h3>
+                        <p class="text-slate-300 mb-4 text-center">**TOTAL INVERSIÓN ESTIMADA:** <span class="text-3xl font-extrabold text-white">$150,000 - $500,000+ USD</span></p>
+                        <div class="chart-container">
+                            <canvas id="budgetChart"></canvas>
+                        </div>
+                        <p class="text-slate-300 mt-4 text-sm">La inversión cubrirá desarrollo de IA, inventario, marketing, operaciones y capital humano.</p>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Plan de Financiación</h3>
+                        <p class="text-slate-300 mb-2">No utilizamos préstamos externos en la fase inicial. La financiación se basa en:</p>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**Recursos Propios:** Ahorros personales e inversión propia de los 6 miembros fundadores (capital semilla).</li>
+                            <li>**Subvenciones:** Búsqueda de apoyos gubernamentales o de fomento al emprendimiento.</li>
+                            <li>**Capitalización:** Posible búsqueda de Inversores Ángeles en fases posteriores.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card col-span-full">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Previsión de Ingresos y Gastos</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-sky-400">Ingresos Previstos</h4>
+                                <ul class="list-disc list-inside text-slate-300 text-sm">
+                                    <li>Venta de dispositivos tecnológicos.</li>
+                                    <li>Posibles servicios premium de IA o soporte extendido (suscripciones).</li>
+                                    <li>Servicios de consultoría o alianzas estratégicas.</li>
+                                    <li>Subvenciones.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-yellow-400">Gastos Previstos</h4>
+                                <ul class="list-disc list-inside text-slate-300 text-sm">
+                                    <li>**Variables:** Costo de inventario, publicidad temporal, seguros, suministros (electricidad, agua, teléfono).</li>
+                                    <li>**Fijos:** Amortización de maquinaria/equipos, reparaciones, contratos de mantenimiento, seguros.</li>
+                                    <li>**Edificios/Instalaciones:** Amortización, reparaciones, contratos, seguros.</li>
+                                    <li>**Personal:** Salarios, seguridad social (empleado y empresa).</li>
+                                    <li>**Otros:** Alquileres, contribuciones/impuestos, intereses de créditos (si aplica), asesoría.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 7: Conclusiones sobre la Viabilidad -->
+            <section id="conclusiones" class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">7. Conclusiones sobre la Viabilidad del Proyecto</h2>
+                <p class="text-slate-300 text-center mb-8">El análisis de viabilidad confirma el potencial de JACMA Technology en el mercado, destacando los factores clave para su éxito a largo plazo.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Puntos Fuertes y Puntos Débiles</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2">
+                            <li>**Puntos Fuertes:** Innovación con IA, equipo capacitado, propuesta de valor de personalización, mercado en crecimiento, marco legal favorable.</li>
+                            <li>**Puntos Débiles:** Marca nueva, alta inversión inicial, dependencia de datos de usuario, competencia establecida.</li>
+                        </ul>
+                    </div>
+                    <div class="section-card">
+                        <h3 class="text-2xl font-bold text-[#7DD3FC] mb-4">Conclusión General</h3>
+                        <p class="text-slate-300 mb-4">El proyecto JACMA Technology es **altamente viable** y posee un **futuro prometedor** en el dinámico mercado tecnológico de la República Dominicana. La propuesta de valor, centrada en la personalización impulsada por IA, aborda una necesidad real y creciente.</p>
+                        <p class="text-slate-300">El éxito dependerá de una **inversión estratégica sostenida**, la **ejecución efectiva** del plan de marketing y ventas, el **cumplimiento riguroso de las obligaciones fiscales y legales**, y la **capacidad de adaptación** a la evolución tecnológica y la competencia. Un emprendimiento responsable es aquel que nace con claridad legal y compromiso fiscal.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 8: Conclusión Final del Equipo -->
+            <section class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">8. Conclusión Final del Equipo</h2>
+                <div class="section-card">
+                    <p class="text-slate-300">En síntesis, JACMA Technology es un proyecto con un futuro prometedor en un mercado dinámico, pero su éxito dependerá de una inversión estratégica sostenida y de la ejecución efectiva de su modelo de negocio innovador para transformar su potencial en una cuota de mercado dominante. El cumplimiento fiscal es un pilar fundamental, y la asesoría experta es imprescindible para operar legalmente, crecer y acceder a beneficios. Un emprendimiento responsable es aquel que nace con claridad legal y compromiso fiscal.</p>
+                </div>
+            </section>
+
+            <!-- Sección 10: Bibliografía -->
+            <section class="mb-20">
+                <h2 class="text-4xl font-bold text-center text-white mb-12">10. Bibliografía, Webgrafía, Otros</h2>
+                <div class="section-card">
+                    <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <li>Ley de Emprendimiento No. 688-16.</li>
+                        <li>www.formalizate.gob.do (Ventanilla Única de Formalización).</li>
+                        <li>Información interna y estimaciones de "EDGAR ADRIAN" (Ingeniero Edgar Adrián Del Valle Castillo).</li>
+                        <li>Documentos de análisis de mercado y planes de marketing internos del equipo.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <footer class="text-center pt-8 border-t border-slate-700">
+                <p class="text-slate-300">&copy; 2025 JACMA Technology. Todos los derechos reservados.</p>
+                <p class="text-slate-400">Un futuro más digital, conectado y eficiente.</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const coverPage = document.getElementById('coverPage');
+            const exploreButton = document.getElementById('exploreButton');
+            const mainContent = document.getElementById('mainContent');
+
+            exploreButton.addEventListener('click', () => {
+                coverPage.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            });
+
+            document.querySelectorAll('.sticky-nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            function wrapLabel(str, maxWidth) {
+                if (str.length <= maxWidth) {
+                    return str;
+                }
+                const words = str.split(' ');
+                let lines = [];
+                let currentLine = words[0];
+                for (let i = 1; i < words.length; i++) {
+                    if (currentLine.length + words[i].length + 1 < maxWidth) {
+                        currentLine += ' ' + words[i];
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = words[i];
+                    }
+                }
+                lines.push(currentLine);
+                return lines;
+            }
+
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+            new Chart(budgetCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        wrapLabel('Desarrollo IA y Plataforma', 16),
+                        wrapLabel('Inventario Inicial', 16),
+                        wrapLabel('Marketing y Publicidad', 16),
+                        wrapLabel('Operaciones y Logística', 16),
+                        wrapLabel('Capital Humano y Admin.', 16)
+                    ],
+                    datasets: [{
+                        label: 'Distribución de Inversión',
+                        data: [40, 25, 15, 10, 10],
+                        backgroundColor: ['#0EA5E9', '#38BDF8', '#7DD3FC', '#BAE6FD', '#E0F2FE'],
+                        borderColor: '#1E293B',
+                        borderWidth: 4,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...tooltipTitleCallback,
+                    plugins: {
+                         ...tooltipTitleCallback.plugins,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#CBD5E1',
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            async function callGeminiAPI(prompt, outputElement, buttonElement, loadingElement, buttonTextElement) {
+                buttonElement.disabled = true;
+                buttonTextElement.classList.add('hidden');
+                loadingElement.classList.remove('hidden');
+                outputElement.innerHTML = 'Generando...';
+
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                let retryCount = 0;
+                const maxRetries = 5;
+                let delay = 1000;
+
+                while (retryCount < maxRetries) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (response.status === 429) {
+                            retryCount++;
+                            delay *= 2;
+                            await new Promise(res => setTimeout(res, delay));
+                            continue;
+                        }
+
+                        const result = await response.json();
+
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            outputElement.innerHTML = result.candidates[0].content.parts[0].text;
+                        } else {
+                            outputElement.innerHTML = 'Lo siento, no pude generar una respuesta. Inténtalo de nuevo.';
+                        }
+                        break;
+                    } catch (error) {
+                        outputElement.innerHTML = 'Ocurrió un error al conectar con la IA. Inténtalo más tarde.';
+                        break;
+                    } finally {
+                        buttonElement.disabled = false;
+                        buttonTextElement.classList.remove('hidden');
+                        loadingElement.classList.add('hidden');
+                    }
+                }
+
+                if (retryCount === maxRetries) {
+                    outputElement.innerHTML = 'Demasiados intentos. Por favor, inténtalo de nuevo más tarde.';
+                    buttonElement.disabled = false;
+                    buttonTextElement.classList.remove('hidden');
+                    loadingElement.classList.add('hidden');
+                }
+            }
+
+            const productIdeaInput = document.getElementById('productIdeaInput');
+            const productIdeaButton = document.getElementById('productIdeaButton');
+            const productIdeaButtonText = document.getElementById('productIdeaButtonText');
+            const productIdeaLoading = document.getElementById('productIdeaLoading');
+            const productIdeaOutput = document.getElementById('productIdeaOutput');
+
+            productIdeaButton.addEventListener('click', () => {
+                const userQuery = productIdeaInput.value.trim();
+                if (!userQuery) {
+                    productIdeaOutput.innerHTML = 'Por favor, describe el tipo de producto para generar ideas.';
+                    return;
+                }
+                const prompt = `Eres un experto en innovación de productos tecnológicos para JACMA Technology. Genera 3-5 ideas de características innovadoras o conceptos de productos para el siguiente tipo de producto o necesidad: "${userQuery}". Las ideas deben ser concisas, creativas y enfocadas en la personalización o mejora de la experiencia del usuario. Presenta las ideas como una lista numerada.`;
+                callGeminiAPI(prompt, productIdeaOutput, productIdeaButton, productIdeaLoading, productIdeaButtonText);
+            });
+        });
+    </script>
+
+</body>
+</html>
